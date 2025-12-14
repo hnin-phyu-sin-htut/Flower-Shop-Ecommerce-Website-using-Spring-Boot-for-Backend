@@ -4,12 +4,17 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.AdminDao;
 import com.example.demo.dao.CustomerDao;
 import com.example.demo.dao.RoleDao;
+import com.example.demo.dto.LoginDto;
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Role;
@@ -34,6 +39,20 @@ public class AuthService {
 	
 	private Role findByRoleName(String roleName) {
 		return roleDao.findByRoleName(roleName).orElse(null);
+	}
+	
+	public LoginDto login(String userNameOrEmail, String password) {
+		var auth = new UsernamePasswordAuthenticationToken(userNameOrEmail, password);
+		Authentication authentication = authenticationManager.authenticate(auth);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		for(GrantedAuthority role: authentication.getAuthorities()) {
+			if(role.getAuthority().startsWith("ROLE_")) {
+				stringBuilder.append(role.getAuthority());
+			}
+		}
+		return new LoginDto(authentication.getName(), stringBuilder.toString());
 	}
 	
 	public String register(String username, String password, String email, String phone, String address, String userType) {
