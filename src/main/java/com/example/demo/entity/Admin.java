@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @DiscriminatorValue("ADMIN")
 public class Admin extends User {
 	
+	@Column(nullable = false)
 	private String phone;
 
 	public Admin(String username, String password, String email, String phone) {
