@@ -31,6 +31,7 @@ public class Customer extends User {
 	private List<Order> orders = new ArrayList<>();
 	
 	public void addOrder(Order order) {
+		order.setCustomer(this);
 		orders.add(order);
 	}
 	

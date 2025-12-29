@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.CustomerDao;
 import com.example.demo.dao.OrderDao;
 import com.example.demo.dao.ProductDao;
-import com.example.demo.dao.ProductOrderDao;
 import com.example.demo.dto.OrderDto;
-import com.example.demo.dto.ProductDto;
 import com.example.demo.dto.ProductOrderDto;
 import com.example.demo.dto.UtilMethods;
 import com.example.demo.entity.Customer;

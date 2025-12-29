@@ -27,14 +27,17 @@ public class UtilMethods {
 	
 	public static ProductDto toProductDto(Product product) {
 	    ProductDto dto = new ProductDto();
-
 	    dto.setId(product.getId());
 	    dto.setName(product.getName());
 	    dto.setPrice(product.getPrice());
-	    dto.setImage(product.getImage());
-	    dto.setQuantity(0);
+	    dto.setQuantity(product.getQuantity());
+
+	    dto.setImage("/api/products/" + product.getId() + "/image");
+
+	    dto.setCategoryId(product.getCategory().getId());
 	    return dto;
 	}
+
 	
 	public static ProductOrderDto toProductOrderDto(ProductOrder po) {
 	    ProductOrderDto dto = new ProductOrderDto();
@@ -48,7 +51,6 @@ public class UtilMethods {
 	          .getPrice()
 	          .multiply(BigDecimal.valueOf(po.getQuantity()))
 	    );
-
 	    return dto;
 	}
 	

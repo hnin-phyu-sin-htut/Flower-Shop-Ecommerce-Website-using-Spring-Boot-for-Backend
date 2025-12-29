@@ -6,6 +6,7 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -38,6 +39,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.httpBasic(Customizer.withDefaults());
+		
 		httpSecurity.cors(c -> {
 			CorsConfigurationSource source = new CorsConfigurationSource() {
 				
@@ -56,9 +58,14 @@ public class SecurityConfig {
 		});
 		
 		httpSecurity.authorizeHttpRequests(c -> {
-			c.requestMatchers("/products").permitAll();
-            c.requestMatchers("/api/cart/**").authenticated();
+//			c.requestMatchers("/api/category/category-list").permitAll();
+//			c.requestMatchers("/api/products/products-list").permitAll();
+//			c.requestMatchers("/api/products/create-product").hasRole("ADMIN");
+//			c.requestMatchers("/api/category/create-category").authenticated();
+            c.requestMatchers("/api/cart/**").authenticated();            
 			c.requestMatchers("/api/auth/**").permitAll();
+			c.requestMatchers("/api/category/**").permitAll();
+			c.requestMatchers("/api/products/**").permitAll();
 			c.anyRequest().authenticated();
 		});
 		httpSecurity.csrf(c -> c.disable());
