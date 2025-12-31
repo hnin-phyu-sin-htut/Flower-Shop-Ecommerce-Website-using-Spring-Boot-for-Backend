@@ -20,8 +20,9 @@ public class ProductDto {
 	private int quantity;
 	private String image;
 	private Long categoryId;
+	private String categoryName;
 	
-	public ProductDto(Long id, String name, BigDecimal price, int quantity, byte[] image, Long categoryId) {
+	public ProductDto(Long id, String name, BigDecimal price, int quantity, byte[] image, Long categoryId, String categoryName) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -30,6 +31,7 @@ public class ProductDto {
 		this.image = image != null ? Base64
 				.getEncoder().encodeToString(image) : null;
 		this.categoryId = categoryId;
+		this.categoryName = categoryName;
 	}
 	
 }

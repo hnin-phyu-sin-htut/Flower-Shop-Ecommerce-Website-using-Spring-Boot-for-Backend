@@ -34,7 +34,11 @@ public class UtilMethods {
 
 	    dto.setImage("/api/products/" + product.getId() + "/image");
 
-	    dto.setCategoryId(product.getCategory().getId());
+	    if (product.getCategory() != null) {
+	        dto.setCategoryId(product.getCategory().getId());
+	        dto.setCategoryName(product.getCategory().getCategoryName());
+	    }
+
 	    return dto;
 	}
 

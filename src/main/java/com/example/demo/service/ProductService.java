@@ -77,7 +77,8 @@ public class ProductService {
 	    	    product.getPrice(),
 	    	    product.getQuantity(),
 	    	    product.getImage(),
-	    	    product.getCategory().getId()
+	    	    product.getCategory().getId(),
+	    	    product.getCategory().getCategoryName()
 	    	);
 
 	}
@@ -86,14 +87,36 @@ public class ProductService {
 		return productDao.findById(id).orElseThrow(ProductNotFoundException::new);
 	}
 	
-	public ProductDto editProduct(long id, ProductEditResquest request) {
-		Product product = findProduct(id);
-		product.setId(id);
-		product.setName(request.name());
-		product.setPrice(request.price());
-		product = productDao.save(product);
+	public ProductDto editProduct(long id, String name, BigDecimal price, MultipartFile image) {
+	    Product product = findProduct(id);
 
-		return new ProductDto();
+	    product.setName(name);
+	    product.setPrice(price);
+
+	    try {
+	        if (image != null && !image.isEmpty()) {
+	            product.setImage(image.getBytes());
+	        }
+	    } catch (Exception e) {
+	        throw new RuntimeException("Failed to update image!");
+	    }
+
+	    product = productDao.save(product);
+
+	    return new ProductDto(
+	        product.getId(),
+	        product.getName(),
+	        product.getPrice(),
+	        product.getQuantity(),
+	        product.getImage(),
+	        product.getCategory().getId(),
+	        product.getCategory().getCategoryName()
+	    );
+	}
+	
+	public void deleteProduct(Long id) {
+	    Product product = findProduct(id);
+	    productDao.delete(product);
 	}
 
 }

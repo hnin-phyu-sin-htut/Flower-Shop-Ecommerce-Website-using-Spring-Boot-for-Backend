@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,12 +65,22 @@ public class ProductController {
 	    return ResponseEntity.status(HttpStatus.CREATED).body(created);
 	}
 	
-	public record ProductEditResquest(String name, BigDecimal price) {}
+	public record ProductEditResquest(String name, BigDecimal price, String image) {}
 	
-	@PutMapping("/edit/{id}")
-	public ProductDto editProduct(@RequestBody ProductEditResquest request,
-			@PathVariable long id) {
-		return productService.editProduct(id, request);
+	@PutMapping(value = "/edit/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ProductDto editProduct(
+	        @PathVariable long id,
+	        @RequestParam String name,
+	        @RequestParam BigDecimal price,
+	        @RequestParam(required = false) MultipartFile image
+	) {
+	    return productService.editProduct(id, name, price, image);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+	    productService.deleteProduct(id);
+	    return ResponseEntity.noContent().build();
 	}
 
 }

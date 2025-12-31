@@ -18,7 +18,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 		        p.price,
 		        p.quantity,
 		        p.image,
-		        p.category.id
+		        p.category.id,
+		        p.category.categoryName
 		    )
 		    from Product p
 		    where p.name = :productName
@@ -32,7 +33,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 		        p.price,
 		        p.quantity,
 		        p.image,
-		        p.category.id
+		        p.category.id,
+		        p.category.categoryName
 		    )
 		    from Product p
 		    join p.category c
@@ -47,7 +49,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 		        p.price,
 		        p.quantity,
 		        p.image,
-		        p.category.id
+		        p.category.id,
+		        p.category.categoryName
 		    )
 		    from Product p
 		""")
