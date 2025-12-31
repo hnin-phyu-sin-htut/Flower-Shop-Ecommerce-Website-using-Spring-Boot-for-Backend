@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,8 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.httpBasic(Customizer.withDefaults());
+		httpSecurity
+		.httpBasic(Customizer.withDefaults());
 		
 		httpSecurity.cors(c -> {
 			CorsConfigurationSource source = new CorsConfigurationSource() {
@@ -58,10 +60,6 @@ public class SecurityConfig {
 		});
 		
 		httpSecurity.authorizeHttpRequests(c -> {
-//			c.requestMatchers("/api/category/category-list").permitAll();
-//			c.requestMatchers("/api/products/products-list").permitAll();
-//			c.requestMatchers("/api/products/create-product").hasRole("ADMIN");
-//			c.requestMatchers("/api/category/create-category").authenticated();
             c.requestMatchers("/api/cart/**").authenticated();            
 			c.requestMatchers("/api/auth/**").permitAll();
 			c.requestMatchers("/api/category/**").permitAll();

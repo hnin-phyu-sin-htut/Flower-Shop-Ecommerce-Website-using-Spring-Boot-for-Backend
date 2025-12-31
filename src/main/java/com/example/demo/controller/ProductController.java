@@ -57,10 +57,10 @@ public class ProductController {
 	    @RequestParam("price") BigDecimal price,
 	    @RequestParam("quantity") int quantity,
 	    @RequestParam(value = "image", required = false) MultipartFile image,
-	    @RequestParam("categoryName") String categoryName
+	    @RequestParam("categoryId") Long categoryId
 	) throws Exception {
 
-	    ProductDto created = productService.createProduct(name, price, quantity, image, categoryName);
+	    ProductDto created = productService.createProduct(name, price, quantity, image, categoryId);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(created);
 	}
 	

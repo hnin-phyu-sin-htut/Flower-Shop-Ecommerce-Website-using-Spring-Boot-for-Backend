@@ -52,9 +52,9 @@ public class ProductService {
                        .toList();
     }
 	
-	public ProductDto createProduct(String name, BigDecimal price, int quantity, MultipartFile image, String categoryName) 
+	public ProductDto createProduct(String name, BigDecimal price, int quantity, MultipartFile image, Long categoryId) 
 			throws Exception {		
-	    Category category = categoryDao.findByCategoryName(categoryName)
+	    Category category = categoryDao.findById(categoryId)
 	            .orElseThrow(() -> new CategoryNotFoundException("Category not found."));
 
 	    Product product = new Product();
